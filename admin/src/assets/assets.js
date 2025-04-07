@@ -14,7 +14,7 @@ import patients_icon from './patients_icon.svg'
 
 export const assets = {
     add_icon,
-    logo,
+    admin_logo,
     appointment_icon,
     cancel_icon,
     doctor_icon,
