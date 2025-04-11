@@ -102,13 +102,9 @@ const updateProfile = async (req, res) => {
             dob,
             gender,
         };
-
-        // Case: User wants to remove their image
         if (removeImage === 'true') {
             updatedFields.image = '';
         }
-
-        // Case: User uploaded a new image
         if (imageFile) {
             const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
                 resource_type: "image",
