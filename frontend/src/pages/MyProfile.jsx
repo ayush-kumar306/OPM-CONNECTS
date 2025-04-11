@@ -51,28 +51,43 @@ const MyProfile = () => {
 
             {isEdit ? (
   <div className='inline-block relative'>
-    <div className='w-24 h-24 bg-gray-100 rounded-md overflow-hidden border border-gray-300 shadow-sm flex items-center justify-center'>
+    <div className='w-24 h-24 bg-gray-100 rounded-md overflow-hidden border border-gray-300 shadow-sm flex items-center justify-center relative'>
       {(image || userData.image) ? (
-        <img
-          className='w-full h-full object-cover'
-          src={image ? URL.createObjectURL(image) : userData.image}
-          alt="Profile"
-        />
-      ) : (
-        <img
-          className='w-24 h-24 opacity-100'
-          src={assets.upload_area}
-          alt="Upload Placeholder"
-        />
-      )}
-    </div>
+        <>
+          <img
+            className='w-full h-full object-cover'
+            src={image ? URL.createObjectURL(image) : userData.image}
+            alt="Profile"
+          />
 
-    {/* Upload Icon Button */}
-    <div
-      onClick={() => document.getElementById('imageUploadInput').click()}
-      className='absolute bottom-1 right-1 bg-blue-400 p-1.5 rounded-full shadow-md cursor-pointer'
-    >
-      <img className='w-5 h-5' src={assets.upload_icon} alt="Upload Icon" />
+          {/* Bottom-right Upload Button */}
+          <div
+            onClick={() => document.getElementById('imageUploadInput').click()}
+            className='absolute bottom-1 right-1 bg-blue-500 p-1.5 rounded-full shadow-md cursor-pointer'
+          >
+            <img className='w-5 h-5' src={assets.upload_icon} alt="Upload Icon" />
+          </div>
+        </>
+      ) : (
+        <>
+          {/* Upload Area Placeholder */}
+          <img
+            className='w-full h-full object-cover'
+            src={assets.upload_area}
+            alt="Upload Placeholder"
+          />
+
+          {/* Centered Upload Button inside Upload Area */}
+          <div
+            onClick={() => document.getElementById('imageUploadInput').click()}
+            className='absolute inset-0 flex items-center justify-center cursor-pointer'
+          >
+            <div className='bg-blue-500 p-2 rounded-full shadow-md'>
+              <img className='w-6 h-6' src={assets.upload_icon} alt="Upload Icon" />
+            </div>
+          </div>
+        </>
+      )}
     </div>
 
     {/* Hidden File Input */}
@@ -99,12 +114,13 @@ const MyProfile = () => {
 ) : (
   <div className='w-24 h-24 bg-gray-100 rounded-md overflow-hidden border border-gray-300 shadow-sm flex items-center justify-center'>
     <img
-      className='w-24 h-24 object-cover'
+      className='w-full h-full object-cover'
       src={userData.image || assets.upload_area}
       alt="Profile"
     />
   </div>
 )}
+
 
 
 
