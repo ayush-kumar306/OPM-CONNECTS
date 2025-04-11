@@ -47,16 +47,36 @@ const MyProfile = () => {
     return userData ? (
         <div className='max-w-lg flex flex-col gap-2 text-sm pt-5'>
 
-            {isEdit
-    ? <label htmlFor='image' >
-        <div className='inline-block relative cursor-pointer'>
-            <img className='w-36 h-36 rounded-full object-cover opacity-75' src={image ? URL.createObjectURL(image) : userData.image} alt="Profile" />
-            <img className='w-10 absolute bottom-12 right-12' src={image ? '' : assets.upload_icon} alt="" />
+            {isEdit ? (
+  <label htmlFor='image'>
+    <div className='inline-block relative cursor-pointer'>
+      <img
+        className='w-36 h-36 rounded-full object-cover opacity-75'
+        src={image ? URL.createObjectURL(image) : userData.image}
+        alt="Profile"
+      />
+      {/* Upload Icon Overlay - More visible */}
+      {!image && (
+        <div className='absolute bottom-4 right-4 bg-white p-2 rounded-full shadow-md'>
+          <img className='w-6 h-6' src={assets.upload_icon} alt="Upload Icon" />
         </div>
-        <input onChange={(e) => setImage(e.target.files[0])} type="file" id="image" hidden />
-    </label>
-    : <img className='w-36 h-36 rounded-full object-cover' src={userData.image} alt="Profile" />
-}
+      )}
+    </div>
+    <input
+      onChange={(e) => setImage(e.target.files[0])}
+      type="file"
+      id="image"
+      hidden
+    />
+  </label>
+) : (
+  <img
+    className='w-36 h-36 rounded-full object-cover'
+    src={userData.image}
+    alt="Profile"
+  />
+)}
+
 
 
             {isEdit
