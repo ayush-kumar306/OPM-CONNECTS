@@ -70,7 +70,7 @@ const MyProfile = () => {
 
       {/* Upload Icon Overlay */}
       <div className='absolute bottom-1 right-1 bg-blue-400 p-1.5 rounded-full shadow-md'>
-        <img className='w-6 h-6' src={assets.upload_icon} alt="Upload Icon" />
+        <img className='w-5 h-5' src={assets.upload_icon} alt="Upload Icon" />
       </div>
     </div>
 
