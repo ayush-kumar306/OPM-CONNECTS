@@ -14,7 +14,7 @@ const Footer = () => {
         <div>
           <p className='text-xl font-medium mb-5'>COMPANY</p>
           <ul className='flex flex-col gap-2 text-gray-600'>
-            <button onClick={() => { navigate('/home'); scrollTo(0, 0) }}>Home</button>
+            <li><button onClick={() => { navigate('/home'); scrollTo(0, 0) }}>Home</button></li>
             <li>About us</li>
             <li>Delivery</li>
             <li>Privacy policy</li>
