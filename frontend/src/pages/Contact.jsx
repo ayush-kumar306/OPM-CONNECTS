@@ -19,8 +19,7 @@ const Contact = () => {
           <p className=' text-gray-500'>Learn more about our teams and job openings.</p>
           <button className='border border-black px-8 py-4 text-sm hover:bg-black hover:text-white transition-all duration-500'>
   <a 
-    href="https://mail.google.com/mail/?view=cm&to=opmconnects@gmail.com&su=Application%20for%20Career%20Opportunities%20at%20OPM%20Connects"
-    target="_blank" 
+    href="https://mail.google.com/mail/?view=cm&to=opmconnects@gmail.com&su=Application%20for%20Career%20Opportunities%20at%20OPM%20Connects" 
     rel="noopener noreferrer"
   >
     Explore Jobs
