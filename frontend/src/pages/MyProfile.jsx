@@ -53,14 +53,14 @@ const MyProfile = () => {
   <label htmlFor='image'>
     <div className='inline-block relative cursor-pointer'>
       <img
-        className='w-10 h-10 rounded-full object-cover opacity-100'
+        className='w-24 h-24 bg-gray-100 rounded-md overflow-hidden border border-gray-300 shadow-sm flex items-center justify-center object-cover opacity-100'
         src={image ? URL.createObjectURL(image) : userData.image}
         alt="Profile"
       />
       {/* Upload Icon Overlay - More visible */}
       {!image && (
-        <div className='absolute bottom-4 right-4 bg-#005cbf p-2 rounded-full shadow-md'>
-          <img className='w-8 h-8' src={assets.upload_icon} alt="Upload Icon" />
+        <div className='absolute bottom-1 right-1 bg-blue-600 p-1.5 rounded-full shadow-md'>
+          <img className='w-5 h-5' src={assets.upload_icon} alt="Upload Icon" />
         </div>
       )}
     </div>
@@ -85,7 +85,7 @@ const MyProfile = () => {
   </label>
 ) : (
   <img
-    className='w-10 h-10 rounded-full object-cover'
+    className='w-24 h-24 rounded-md object-cover border border-gray-300'
     src={userData.image}
     alt="Profile"
   />
