@@ -87,33 +87,45 @@ const getProfile = async (req, res) => {
 }
 
 const updateProfile = async (req, res) => {
-
     try {
-
-        const { userId, name, phone, address, dob, gender } = req.body
-        const imageFile = req.file
+        const { userId, name, phone, address, dob, gender, removeImage } = req.body;
+        const imageFile = req.file;
 
         if (!name || !phone || !dob || !gender) {
-            return res.json({ success: false, message: "Data Missing" })
+            return res.json({ success: false, message: "Data Missing" });
         }
 
-        await userModel.findByIdAndUpdate(userId, { name, phone, address: JSON.parse(address), dob, gender })
+        const updatedFields = {
+            name,
+            phone,
+            address: JSON.parse(address),
+            dob,
+            gender,
+        };
 
+        // Case: User wants to remove their image
+        if (removeImage === 'true') {
+            updatedFields.image = '';
+        }
+
+        // Case: User uploaded a new image
         if (imageFile) {
-
-            const imageUpload = await cloudinary.uploader.upload(imageFile.path, { resource_type: "image" })
-            const imageURL = imageUpload.secure_url
-
-            await userModel.findByIdAndUpdate(userId, { image: imageURL })
+            const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
+                resource_type: "image",
+            });
+            updatedFields.image = imageUpload.secure_url;
         }
 
-        res.json({ success: true, message: 'Profile Updated' })
+        await userModel.findByIdAndUpdate(userId, updatedFields);
+
+        res.json({ success: true, message: 'Profile Updated' });
 
     } catch (error) {
-        console.log(error)
-        res.json({ success: false, message: error.message })
+        console.log(error);
+        res.json({ success: false, message: error.message });
     }
 }
+
 
 const bookAppointment = async (req, res) => {
 
