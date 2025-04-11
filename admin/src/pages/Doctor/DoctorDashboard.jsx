@@ -54,7 +54,7 @@ const DoctorDashboard = () => {
         <div className='pt-4 border border-t-0'>
           {dashData.latestAppointments.slice(0, 5).map((item, index) => (
             <div className='flex items-center px-6 py-3 gap-3 hover:bg-gray-100' key={index}>
-              <img className='rounded-full w-10 h-10' src={item.userData.image} alt="" />
+              <img className='rounded-full w-8 h-8' src={item.userData.image} alt="" />
               <div className='flex-1 text-sm'>
                 <p className='text-gray-800 font-medium'>{item.userData.name}</p>
                 <p className='text-gray-600 '>Booking on {slotDateFormat(item.slotDate)}</p>
