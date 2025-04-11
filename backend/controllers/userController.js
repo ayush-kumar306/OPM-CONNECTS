@@ -87,45 +87,33 @@ const getProfile = async (req, res) => {
 }
 
 const updateProfile = async (req, res) => {
+
     try {
-        const { userId, name, phone, address, dob, gender, removeImage } = req.body;
-        const imageFile = req.file;
+
+        const { userId, name, phone, address, dob, gender } = req.body
+        const imageFile = req.file
 
         if (!name || !phone || !dob || !gender) {
-            return res.json({ success: false, message: "Data Missing" });
+            return res.json({ success: false, message: "Data Missing" })
         }
 
-        const updatedFields = {
-            name,
-            phone,
-            address: JSON.parse(address),
-            dob,
-            gender,
-        };
+        await userModel.findByIdAndUpdate(userId, { name, phone, address: JSON.parse(address), dob, gender })
 
-        // Case: User wants to remove their image
-        if (removeImage === 'true') {
-            updatedFields.image = '';
-        }
-
-        // Case: User uploaded a new image
         if (imageFile) {
-            const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
-                resource_type: "image",
-            });
-            updatedFields.image = imageUpload.secure_url;
+
+            const imageUpload = await cloudinary.uploader.upload(imageFile.path, { resource_type: "image" })
+            const imageURL = imageUpload.secure_url
+
+            await userModel.findByIdAndUpdate(userId, { image: imageURL })
         }
 
-        await userModel.findByIdAndUpdate(userId, updatedFields);
-
-        res.json({ success: true, message: 'Profile Updated' });
+        res.json({ success: true, message: 'Profile Updated' })
 
     } catch (error) {
-        console.log(error);
-        res.json({ success: false, message: error.message });
+        console.log(error)
+        res.json({ success: false, message: error.message })
     }
 }
-
 
 const bookAppointment = async (req, res) => {
 
@@ -252,8 +240,8 @@ const paymentStripe = async (req, res) => {
         }]
 
         const session = await stripeInstance.checkout.sessions.create({
-            success_url: `${origin}/verify?success=true&appointmentId=${appointmentData._id}`,
-            cancel_url: `${origin}/verify?success=false&appointmentId=${appointmentData._id}`,
+            success_url: ${origin}/verify?success=true&appointmentId=${appointmentData._id},
+            cancel_url: ${origin}/verify?success=false&appointmentId=${appointmentData._id},
             line_items: line_items,
             mode: 'payment',
         })
@@ -296,3 +284,5 @@ export {
     paymentStripe,
     verifyStripe
 }
+
+make the changes in the backend folder that if the user wants to remove the image then the backend also does the same from the database
