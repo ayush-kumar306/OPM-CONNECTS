@@ -314,5 +314,3 @@ export {
     paymentStripe,
     verifyStripe
 }
-
-make the changes in the backend folder that if the user wants to remove the image then the backend also does the same from the database
