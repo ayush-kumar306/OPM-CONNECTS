@@ -16,8 +16,7 @@ const Contact = () => {
           <p className=' text-gray-500'>Chitkara University <br /> Himachal Pradesh, India</p>
          <p className='text-gray-500'>
   Mob.: <a href="tel:+919142399702" className="hover:underline">+91 9142399702</a> <br />
-  Email: <a href="mailto:opmconnects@gmail.com?subject=Application%20for%20Career%20Opportunities%20at%20OPM%20Connects" 
-    className="hover:underline">opmconnects@gmail.com</a></p>
+  Email: <a href="mailto:opmconnects@gmail.com?" className="hover:underline">opmconnects@gmail.com</a></p>
           <p className=' font-semibold text-lg text-gray-600'>CAREERS AT OPM CONNECTS</p>
           <p className=' text-gray-500'>Learn more about our teams and job openings.</p>
         <button><a href="mailto:opmconnects@gmail.com?subject=Application%20for%20Career%20Opportunities%20at%20OPM%20Connects" 
