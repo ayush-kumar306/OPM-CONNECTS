@@ -50,35 +50,37 @@ const MyProfile = () => {
         <div className='max-w-lg flex flex-col gap-2 text-sm pt-5'>
 
             {isEdit ? (
-  <label htmlFor='image'>
-    <div className='inline-block relative cursor-pointer'>
-      <div className='w-24 h-24 bg-gray-100 rounded-md overflow-hidden border border-gray-300 shadow-sm flex items-center justify-center'>
-        {(image || userData.image) ? (
-          <img
-            className='w-full h-full object-cover'
-            src={image ? URL.createObjectURL(image) : userData.image}
-            alt="Profile"
-          />
-        ) : (
-          <img
-            className='w-24 h-24 opacity-100'
-            src={assets.upload_area}
-            alt="Upload Placeholder"
-          />
-        )}
-      </div>
-
-      {/* Upload Icon Overlay */}
-      <div className='absolute bottom-1 right-1 bg-blue-400 p-1.5 rounded-full shadow-md'>
-        <img className='w-5 h-5' src={assets.upload_icon} alt="Upload Icon" />
-      </div>
+  <div className='inline-block relative'>
+    <div className='w-24 h-24 bg-gray-100 rounded-md overflow-hidden border border-gray-300 shadow-sm flex items-center justify-center'>
+      {(image || userData.image) ? (
+        <img
+          className='w-full h-full object-cover'
+          src={image ? URL.createObjectURL(image) : userData.image}
+          alt="Profile"
+        />
+      ) : (
+        <img
+          className='w-24 h-24 opacity-100'
+          src={assets.upload_area}
+          alt="Upload Placeholder"
+        />
+      )}
     </div>
 
+    {/* Upload Icon Button */}
+    <div
+      onClick={() => document.getElementById('imageUploadInput').click()}
+      className='absolute bottom-1 right-1 bg-blue-400 p-1.5 rounded-full shadow-md cursor-pointer'
+    >
+      <img className='w-5 h-5' src={assets.upload_icon} alt="Upload Icon" />
+    </div>
+
+    {/* Hidden File Input */}
     <input
-      onChange={(e) => setImage(e.target.files[0])}
       type="file"
-      id="image"
+      id="imageUploadInput"
       hidden
+      onChange={(e) => setImage(e.target.files[0])}
     />
 
     {(image || userData.image) && (
@@ -93,7 +95,7 @@ const MyProfile = () => {
         Remove Profile Image
       </div>
     )}
-  </label>
+  </div>
 ) : (
   <div className='w-24 h-24 bg-gray-100 rounded-md overflow-hidden border border-gray-300 shadow-sm flex items-center justify-center'>
     <img
