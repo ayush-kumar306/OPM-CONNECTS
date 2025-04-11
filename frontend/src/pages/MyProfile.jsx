@@ -69,8 +69,8 @@ const MyProfile = () => {
       </div>
 
       {/* Upload Icon Overlay */}
-      <div className='absolute bottom-5 right-5 bg-blue-400 p-1.5 rounded-full shadow-md'>
-        <img className='w-8 h-8' src={assets.upload_icon} alt="Upload Icon" />
+      <div className='absolute bottom-1 right-1 bg-blue-400 p-1.5 rounded-full shadow-md'>
+        <img className='w-6 h-6' src={assets.upload_icon} alt="Upload Icon" />
       </div>
     </div>
 
@@ -97,7 +97,7 @@ const MyProfile = () => {
 ) : (
   <div className='w-24 h-24 bg-gray-100 rounded-md overflow-hidden border border-gray-300 shadow-sm flex items-center justify-center'>
     <img
-      className='w-full h-full object-cover'
+      className='w-24 h-24 object-cover'
       src={userData.image || assets.upload_area}
       alt="Profile"
     />
