@@ -52,25 +52,36 @@ const MyProfile = () => {
             {isEdit ? (
   <label htmlFor='image'>
     <div className='inline-block relative cursor-pointer'>
-      <img
-        className='w-24 h-24 bg-gray-100 rounded-md overflow-hidden border border-gray-300 shadow-sm flex items-center justify-center object-cover opacity-100'
-        src={image ? URL.createObjectURL(image) : userData.image}
-        alt="Profile"
-      />
-      {/* Upload Icon Overlay - More visible */}
-      {!image && (
-        <div className='absolute center bg-blue-600 p-1.5 rounded-full shadow-md'>
-          <img className='w-5 h-5' src={assets.upload_icon} alt="Upload Icon" />
-        </div>
-      )}
+      <div className='w-24 h-24 bg-gray-100 rounded-md overflow-hidden border border-gray-300 shadow-sm flex items-center justify-center'>
+        {(image || userData.image) ? (
+          <img
+            className='w-full h-full object-cover'
+            src={image ? URL.createObjectURL(image) : userData.image}
+            alt="Profile"
+          />
+        ) : (
+          <img
+            className='w-10 h-10 opacity-60'
+            src={assets.upload_area}
+            alt="Upload Placeholder"
+          />
+        )}
+      </div>
+
+      {/* Upload Icon Overlay */}
+      <div className='absolute bottom-1 right-1 bg-blue-600 p-1.5 rounded-full shadow-md'>
+        <img className='w-5 h-5' src={assets.upload_icon} alt="Upload Icon" />
+      </div>
     </div>
+
     <input
       onChange={(e) => setImage(e.target.files[0])}
       type="file"
       id="image"
       hidden
     />
-      {(image || userData.image) && (
+
+    {(image || userData.image) && (
       <div
         onClick={(e) => {
           e.preventDefault();
@@ -84,11 +95,13 @@ const MyProfile = () => {
     )}
   </label>
 ) : (
-  <img
-    className='w-12 h-12 opacity-100'
-    src={assets.upload_area}
-    alt="Upload Placeholder"
-  />
+  <div className='w-24 h-24 bg-gray-100 rounded-md overflow-hidden border border-gray-300 shadow-sm flex items-center justify-center'>
+    <img
+      className='w-full h-full object-cover'
+      src={userData.image || assets.upload_area}
+      alt="Profile"
+    />
+  </div>
 )}
 
 
