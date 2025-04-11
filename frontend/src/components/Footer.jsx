@@ -14,10 +14,10 @@ const Footer = () => {
         <div>
           <p className='text-xl font-medium mb-5'>COMPANY</p>
           <ul className='flex flex-col gap-2 text-gray-600'>
-            <li><button onClick={() => { navigate('/home'); scrollTo(0, 0) }}>Home</button></li>
-            <li>About us</li>
-            <li>Delivery</li>
-            <li>Privacy policy</li>
+            <li><button onClick={() => { navigate('/Home'); scrollTo(0, 0) }}>Home</button></li>
+            <li><button onClick={() => { navigate('/Doctors'); scrollTo(0, 0) }}>All Doctors</button></li>
+            <li><button onClick={() => { navigate('/About'); scrollTo(0, 0) }}>About Us</button></li>
+            <li><button onClick={() => { navigate('/Contact'); scrollTo(0, 0) }}>Contact</button></li>
           </ul>
         </div>
 
