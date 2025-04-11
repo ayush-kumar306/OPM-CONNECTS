@@ -68,6 +68,18 @@ const MyProfile = () => {
       id="image"
       hidden
     />
+      {(image || userData.image) && (
+      <div
+        onClick={(e) => {
+          e.preventDefault();
+          setImage(null);
+          setUserData((prev) => ({ ...prev, image: '' }));
+        }}
+        className='text-sm text-red-500 mt-2 underline cursor-pointer'
+      >
+        Remove Profile Image
+      </div>
+    )}
   </label>
 ) : (
   <img
