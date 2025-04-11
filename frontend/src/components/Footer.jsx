@@ -27,7 +27,14 @@ const Footer = () => {
         <div>
           <p className='text-xl font-medium mb-5'>GET IN TOUCH</p>
           <ul className='flex flex-col gap-2 text-gray-600'>
-            <li>+91 9142399702</li>
+            <li>
+  <a 
+    href="tel:+919142399702" 
+    className="hover:underline">
+    +91 9142399702
+  </a>
+</li>
+
             <li>
   <a 
     href="https://mail.google.com/mail/?view=cm&to=opmconnects@gmail.com" 
