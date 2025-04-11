@@ -61,7 +61,7 @@ const MyProfile = () => {
           />
         ) : (
           <img
-            className='w-10 h-10 opacity-60'
+            className='w-24 h-24 opacity-100'
             src={assets.upload_area}
             alt="Upload Placeholder"
           />
@@ -69,8 +69,8 @@ const MyProfile = () => {
       </div>
 
       {/* Upload Icon Overlay */}
-      <div className='absolute bottom-1 right-1 bg-blue-600 p-1.5 rounded-full shadow-md'>
-        <img className='w-5 h-5' src={assets.upload_icon} alt="Upload Icon" />
+      <div className='absolute bottom-5 right-5 bg-blue-400 p-1.5 rounded-full shadow-md'>
+        <img className='w-8 h-8' src={assets.upload_icon} alt="Upload Icon" />
       </div>
     </div>
 
