@@ -48,15 +48,16 @@ const MyProfile = () => {
         <div className='max-w-lg flex flex-col gap-2 text-sm pt-5'>
 
             {isEdit
-                ? <label htmlFor='image' >
-                    <div className='inline-block relative cursor-pointer'>
-                        <img className='w-36 rounded opacity-75' src={image ? URL.createObjectURL(image) : userData.image} alt="" />
-                        <img className='w-10 absolute bottom-12 right-12' src={image ? '' : assets.upload_icon} alt="" />
-                    </div>
-                    <input onChange={(e) => setImage(e.target.files[0])} type="file" id="image" hidden />
-                </label>
-                : <img className='w-36 rounded' src={userData.image} alt="" />
-            }
+    ? <label htmlFor='image' >
+        <div className='inline-block relative cursor-pointer'>
+            <img className='w-36 h-36 rounded-full object-cover opacity-75' src={image ? URL.createObjectURL(image) : userData.image} alt="Profile" />
+            <img className='w-10 absolute bottom-12 right-12' src={image ? '' : assets.upload_icon} alt="" />
+        </div>
+        <input onChange={(e) => setImage(e.target.files[0])} type="file" id="image" hidden />
+    </label>
+    : <img className='w-36 h-36 rounded-full object-cover' src={userData.image} alt="Profile" />
+}
+
 
             {isEdit
                 ? <input className='bg-gray-50 text-3xl font-medium max-w-60' type="text" onChange={(e) => setUserData(prev => ({ ...prev, name: e.target.value }))} value={userData.name} />
