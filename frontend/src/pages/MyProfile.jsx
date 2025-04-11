@@ -26,6 +26,8 @@ const MyProfile = () => {
 
             image && formData.append('image', image)
 
+            formData.append('removeImage', !image && !userData.image ? 'true' : 'false');
+
             const { data } = await axios.post(backendUrl + '/api/user/update-profile', formData, { headers: { token } })
 
             if (data.success) {
