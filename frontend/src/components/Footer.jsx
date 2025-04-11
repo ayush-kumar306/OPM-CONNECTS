@@ -17,10 +17,10 @@ const Footer = () => {
         <div>
           <p className='text-xl font-medium mb-5'>COMPANY</p>
           <ul className='flex flex-col gap-2 text-gray-600'>
-            <li><button onClick={() => { navigate('/pages/Home'); scrollTo(0, 0) }}>Home</button></li>
-            <li><button onClick={() => { navigate('/pages/Doctors'); scrollTo(0, 0) }}>All Doctors</button></li>
-            <li><button onClick={() => { navigate('/pages/About'); scrollTo(0, 0) }}>About Us</button></li>
-            <li><button onClick={() => { navigate('/pages/Contact'); scrollTo(0, 0) }}>Contact</button></li>
+            <li><button onClick={() => { navigate('/'); scrollTo(0, 0) }}>Home</button></li>
+            <li><button onClick={() => { navigate('/doctors'); scrollTo(0, 0) }}>All Doctors</button></li>
+            <li><button onClick={() => { navigate('/about'); scrollTo(0, 0) }}>About Us</button></li>
+            <li><button onClick={() => { navigate('/contact'); scrollTo(0, 0) }}>Contact</button></li>
           </ul>
         </div>
 
