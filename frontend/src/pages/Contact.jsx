@@ -17,7 +17,12 @@ const Contact = () => {
           <p className=' text-gray-500'>Mob.: +91 9142399702 <br /> Email: opmconnects@gmail.com</p>
           <p className=' font-semibold text-lg text-gray-600'>CAREERS AT OPM CONNECTS</p>
           <p className=' text-gray-500'>Learn more about our teams and job openings.</p>
-          <button className='border border-black px-8 py-4 text-sm hover:bg-black hover:text-white transition-all duration-500'>Explore Jobs</button>
+          <button className='border border-black px-8 py-4 text-sm hover:bg-black hover:text-white transition-all duration-500'><a 
+    href="https://mail.google.com/mail/?view=cm&to=opmconnects@gmail.com" 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="hover:underline">
+Explore Jobs</a></button>
         </div>
       </div>
 
