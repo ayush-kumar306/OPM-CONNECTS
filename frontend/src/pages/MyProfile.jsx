@@ -53,7 +53,7 @@ const MyProfile = () => {
   <label htmlFor='image'>
     <div className='inline-block relative cursor-pointer'>
       <img
-        className='w-36 h-36 rounded-full object-cover opacity-75'
+        className='w-10 h-10 rounded-full object-cover opacity-100'
         src={image ? URL.createObjectURL(image) : userData.image}
         alt="Profile"
       />
@@ -85,7 +85,7 @@ const MyProfile = () => {
   </label>
 ) : (
   <img
-    className='w-36 h-36 rounded-full object-cover'
+    className='w-10 h-10 rounded-full object-cover'
     src={userData.image}
     alt="Profile"
   />
