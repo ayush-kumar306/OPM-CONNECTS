@@ -95,6 +95,8 @@ const updateProfile = async (req, res) => {
             return res.json({ success: false, message: "Data Missing" });
         }
 
+        const user = await userModel.findById(userId);
+
         const updatedFields = {
             name,
             phone,
@@ -102,10 +104,29 @@ const updateProfile = async (req, res) => {
             dob,
             gender,
         };
-        if (removeImage === 'true') {
-            updatedFields.image = '';
+
+        // Handle image removal
+        if (removeImage === 'true' && user.image) {
+            // Extract public_id from Cloudinary image URL
+            const segments = user.image.split('/');
+            const publicIdWithExtension = segments[segments.length - 1];
+            const publicId = publicIdWithExtension.split('.')[0];
+
+            await cloudinary.uploader.destroy(publicId); // Delete image from Cloudinary
+            updatedFields.image = ''; // Clear image from DB
         }
+
+        // Handle image update
         if (imageFile) {
+            // Optional: delete old image
+            if (user.image) {
+                const segments = user.image.split('/');
+                const publicIdWithExtension = segments[segments.length - 1];
+                const publicId = publicIdWithExtension.split('.')[0];
+
+                await cloudinary.uploader.destroy(publicId);
+            }
+
             const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
                 resource_type: "image",
             });
@@ -121,6 +142,7 @@ const updateProfile = async (req, res) => {
         res.json({ success: false, message: error.message });
     }
 };
+
 
 
 const bookAppointment = async (req, res) => {
