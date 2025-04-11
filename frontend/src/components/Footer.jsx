@@ -29,9 +29,15 @@ const Footer = () => {
           <ul className='flex flex-col gap-2 text-gray-600'>
             <li>+91 9142399702</li>
             <li>
-  <a href="https://mail.google.com/mail/?view=cm&to=opmconnects@gmail.com" target="_blank" rel="noopener noreferrer" className="hover:underline">
+  <a 
+    href="https://mail.google.com/mail/?view=cm&to=opmconnects@gmail.com" 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="hover:underline">
     opmconnects@gmail.com
-  </a></li>
+  </a>
+</li>
+
           </ul>
         </div>
 
