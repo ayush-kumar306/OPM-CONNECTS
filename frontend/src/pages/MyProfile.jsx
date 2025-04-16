@@ -126,7 +126,7 @@ const MyProfile = () => {
             <hr className='bg-[#ADADAD] h-[1px] border-none' />
 
             <div>
-                <p className='text-gray-600 underline mt-3'>CONTACT INFORMATION</p>
+                <p className='text-gray-700 underline mt-3'>CONTACT INFORMATION</p>
                 <div className='grid grid-cols-[1fr_3fr] gap-y-2.5 mt-3 text-[#363636]'>
                     <p className='font-medium'>Email id:</p>
                     <p className='text-blue-500'>{userData.email}</p>
