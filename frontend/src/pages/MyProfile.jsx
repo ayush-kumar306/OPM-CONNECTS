@@ -60,7 +60,6 @@ const MyProfile = () => {
             alt="Profile"
           />
 
-          {/* Bottom-right Upload Button */}
           <div
             onClick={() => document.getElementById('imageUploadInput').click()}
             className='absolute bottom-1 right-1 bg-blue-500 p-1.5 rounded-full shadow-md cursor-pointer'
@@ -70,14 +69,12 @@ const MyProfile = () => {
         </>
       ) : (
         <>
-          {/* Upload Area Placeholder */}
           <img
             className='w-full h-full object-cover'
             src={assets.upload_area}
             alt="Upload Placeholder"
           />
 
-          {/* Centered Upload Button inside Upload Area */}
           <div
             onClick={() => document.getElementById('imageUploadInput').click()}
             className='absolute inset-0 flex items-center justify-center cursor-pointer'
@@ -105,9 +102,9 @@ const MyProfile = () => {
           setImage(null);
           setUserData((prev) => ({ ...prev, image: '' }));
         }}
-        className='text-sm text-red-500 mt-2 underline cursor-pointer'
+        className='text-sm text-sb-red-500 mt-2 underline cursor-pointer'
       >
-        Remove Profile Image
+        Remove Image
       </div>
     )}
   </div>
