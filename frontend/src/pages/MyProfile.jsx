@@ -102,7 +102,7 @@ const MyProfile = () => {
           setImage(null);
           setUserData((prev) => ({ ...prev, image: '' }));
         }}
-        className='text-sm text-sb-red-500 mt-2 underline cursor-pointer'
+        className='text-sm text-red-500 mt-2 underline cursor-pointer'
       >
         Remove Image
       </div>
