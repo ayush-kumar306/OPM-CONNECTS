@@ -150,7 +150,7 @@ const MyProfile = () => {
                 </div>
             </div>
             <div>
-                <p className='text-[#797979] underline mt-3'>BASIC INFORMATION</p>
+                <p className='text-gray-700 underline mt-3'>BASIC INFORMATION</p>
                 <div className='grid grid-cols-[1fr_3fr] gap-y-2.5 mt-3 text-gray-600'>
                     <p className='font-medium'>Gender:</p>
 
