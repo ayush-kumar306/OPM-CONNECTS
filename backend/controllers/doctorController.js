@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import doctorModel from "../models/doctorModel.js";
 import appointmentModel from "../models/appointmentModel.js";
+import userModel from "../models/userModel.js"; // Added for fetching patient details
 
 const loginDoctor = async (req, res) => {
     try {
@@ -43,7 +44,7 @@ const appointmentCancel = async (req, res) => {
         const { docId, appointmentId } = req.body;
 
         const appointmentData = await appointmentModel.findById(appointmentId);
-        if (appointmentData && appointmentData.docId === docId) {
+        if (appointmentData && appointmentData.docId == docId) {
             await appointmentModel.findByIdAndUpdate(appointmentId, { cancelled: true });
             return res.json({ success: true, message: 'Appointment Cancelled' });
         }
@@ -60,12 +61,12 @@ const appointmentComplete = async (req, res) => {
         const { docId, appointmentId } = req.body;
 
         const appointmentData = await appointmentModel.findById(appointmentId);
-        if (appointmentData && appointmentData.docId === docId) {
+        if (appointmentData && appointmentData.docId == docId) {
             await appointmentModel.findByIdAndUpdate(appointmentId, { isCompleted: true });
             return res.json({ success: true, message: 'Appointment Completed' });
         }
 
-        res.json({ success: false, message: 'Appointment Cancelled' });
+        res.json({ success: false, message: 'Appointment Not Found or Already Completed' });
     } catch (error) {
         console.log(error);
         res.json({ success: false, message: error.message });
@@ -87,7 +88,7 @@ const changeAvailablity = async (req, res) => {
         const { docId } = req.body;
         const docData = await doctorModel.findById(docId);
         await doctorModel.findByIdAndUpdate(docId, { available: !docData.available });
-        res.json({ success: true, message: 'Availablity Changed' });
+        res.json({ success: true, message: 'Availability Changed' });
     } catch (error) {
         console.log(error);
         res.json({ success: false, message: error.message });
@@ -123,23 +124,19 @@ const doctorDashboard = async (req, res) => {
         const appointments = await appointmentModel.find({ docId });
 
         let earnings = 0;
+        let patients = new Set();
+
         appointments.forEach(item => {
             if (item.isCompleted || item.payment) {
                 earnings += item.amount;
             }
-        });
-
-        let patients = [];
-        appointments.forEach(item => {
-            if (!patients.includes(item.userId)) {
-                patients.push(item.userId);
-            }
+            patients.add(item.userId.toString());
         });
 
         const dashData = {
             earnings,
             appointments: appointments.length,
-            patients: patients.length,
+            patients: patients.size,
             latestAppointments: appointments.reverse()
         };
 
@@ -152,12 +149,19 @@ const doctorDashboard = async (req, res) => {
 
 const bookAppointmentDoctor = async (req, res) => {
     try {
-        const { docId, slotDate, timeSlot, userId, amount } = req.body;
+        const { docId, slotDate, slotTime, userId, amount } = req.body;
 
+        // Check if doctor is available
+        const doctor = await doctorModel.findById(docId);
+        if (!doctor || !doctor.available) {
+            return res.status(400).json({ success: false, message: "Doctor not available" });
+        }
+
+        // Prevent double-booking
         const existing = await appointmentModel.findOne({
             docId,
             slotDate,
-            timeSlot,
+            slotTime,
             cancelled: { $ne: true }
         });
 
@@ -168,12 +172,25 @@ const bookAppointmentDoctor = async (req, res) => {
             });
         }
 
+        const patient = await userModel.findById(userId).select("-password");
+        if (!patient) {
+            return res.status(404).json({ success: false, message: "Patient not found" });
+        }
+
         const newAppointment = new appointmentModel({
             docId,
-            slotDate,
-            timeSlot,
             userId,
-            amount
+            userData: patient,
+            docData: {
+                _id: doctor._id,
+                name: doctor.name,
+                specialization: doctor.specialization,
+                fees: doctor.fees
+            },
+            amount,
+            slotDate,
+            slotTime,
+            date: new Date()
         });
 
         await newAppointment.save();
@@ -183,6 +200,7 @@ const bookAppointmentDoctor = async (req, res) => {
             message: "Appointment booked successfully",
             appointment: newAppointment
         });
+
     } catch (error) {
         console.log(error);
         res.status(500).json({ success: false, message: error.message });
@@ -193,11 +211,11 @@ export {
     loginDoctor,
     appointmentsDoctor,
     appointmentCancel,
+    appointmentComplete,
     doctorList,
     changeAvailablity,
-    appointmentComplete,
-    doctorDashboard,
     doctorProfile,
     updateDoctorProfile,
+    doctorDashboard,
     bookAppointmentDoctor
 };
