@@ -4,182 +4,190 @@ import doctorModel from "../models/doctorModel.js";
 import appointmentModel from "../models/appointmentModel.js";
 
 const loginDoctor = async (req, res) => {
-
     try {
-
-        const { email, password } = req.body
-        const user = await doctorModel.findOne({ email })
+        const { email, password } = req.body;
+        const user = await doctorModel.findOne({ email });
 
         if (!user) {
-            return res.json({ success: false, message: "Invalid credentials" })
+            return res.json({ success: false, message: "Invalid credentials" });
         }
 
-        const isMatch = await bcrypt.compare(password, user.password)
+        const isMatch = await bcrypt.compare(password, user.password);
 
         if (isMatch) {
-            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
-            res.json({ success: true, token })
+            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+            res.json({ success: true, token });
         } else {
-            res.json({ success: false, message: "Invalid credentials" })
+            res.json({ success: false, message: "Invalid credentials" });
         }
-
-
     } catch (error) {
-        console.log(error)
-        res.json({ success: false, message: error.message })
+        console.log(error);
+        res.json({ success: false, message: error.message });
     }
-}
+};
 
 const appointmentsDoctor = async (req, res) => {
     try {
+        const { docId } = req.body;
+        const appointments = await appointmentModel.find({ docId });
 
-        const { docId } = req.body
-        const appointments = await appointmentModel.find({ docId })
-
-        res.json({ success: true, appointments })
-
+        res.json({ success: true, appointments });
     } catch (error) {
-        console.log(error)
-        res.json({ success: false, message: error.message })
+        console.log(error);
+        res.json({ success: false, message: error.message });
     }
-}
+};
 
 const appointmentCancel = async (req, res) => {
     try {
+        const { docId, appointmentId } = req.body;
 
-        const { docId, appointmentId } = req.body
-
-        const appointmentData = await appointmentModel.findById(appointmentId)
+        const appointmentData = await appointmentModel.findById(appointmentId);
         if (appointmentData && appointmentData.docId === docId) {
-            await appointmentModel.findByIdAndUpdate(appointmentId, { cancelled: true })
-            return res.json({ success: true, message: 'Appointment Cancelled' })
+            await appointmentModel.findByIdAndUpdate(appointmentId, { cancelled: true });
+            return res.json({ success: true, message: 'Appointment Cancelled' });
         }
 
-        res.json({ success: false, message: 'Appointment Cancelled' })
-
+        res.json({ success: false, message: 'Appointment Cancelled' });
     } catch (error) {
-        console.log(error)
-        res.json({ success: false, message: error.message })
+        console.log(error);
+        res.json({ success: false, message: error.message });
     }
-
-}
+};
 
 const appointmentComplete = async (req, res) => {
     try {
+        const { docId, appointmentId } = req.body;
 
-        const { docId, appointmentId } = req.body
-
-        const appointmentData = await appointmentModel.findById(appointmentId)
+        const appointmentData = await appointmentModel.findById(appointmentId);
         if (appointmentData && appointmentData.docId === docId) {
-            await appointmentModel.findByIdAndUpdate(appointmentId, { isCompleted: true })
-            return res.json({ success: true, message: 'Appointment Completed' })
+            await appointmentModel.findByIdAndUpdate(appointmentId, { isCompleted: true });
+            return res.json({ success: true, message: 'Appointment Completed' });
         }
 
-        res.json({ success: false, message: 'Appointment Cancelled' })
-
+        res.json({ success: false, message: 'Appointment Cancelled' });
     } catch (error) {
-        console.log(error)
-        res.json({ success: false, message: error.message })
+        console.log(error);
+        res.json({ success: false, message: error.message });
     }
-
-}
+};
 
 const doctorList = async (req, res) => {
     try {
-
-        const doctors = await doctorModel.find({}).select(['-password', '-email'])
-        res.json({ success: true, doctors })
-
+        const doctors = await doctorModel.find({}).select(['-password', '-email']);
+        res.json({ success: true, doctors });
     } catch (error) {
-        console.log(error)
-        res.json({ success: false, message: error.message })
+        console.log(error);
+        res.json({ success: false, message: error.message });
     }
-
-}
+};
 
 const changeAvailablity = async (req, res) => {
     try {
-
-        const { docId } = req.body
-
-        const docData = await doctorModel.findById(docId)
-        await doctorModel.findByIdAndUpdate(docId, { available: !docData.available })
-        res.json({ success: true, message: 'Availablity Changed' })
-
+        const { docId } = req.body;
+        const docData = await doctorModel.findById(docId);
+        await doctorModel.findByIdAndUpdate(docId, { available: !docData.available });
+        res.json({ success: true, message: 'Availablity Changed' });
     } catch (error) {
-        console.log(error)
-        res.json({ success: false, message: error.message })
+        console.log(error);
+        res.json({ success: false, message: error.message });
     }
-}
+};
 
 const doctorProfile = async (req, res) => {
     try {
+        const { docId } = req.body;
+        const profileData = await doctorModel.findById(docId).select('-password');
 
-        const { docId } = req.body
-        const profileData = await doctorModel.findById(docId).select('-password')
-
-        res.json({ success: true, profileData })
-
+        res.json({ success: true, profileData });
     } catch (error) {
-        console.log(error)
-        res.json({ success: false, message: error.message })
+        console.log(error);
+        res.json({ success: false, message: error.message });
     }
-}
+};
 
 const updateDoctorProfile = async (req, res) => {
     try {
-
-        const { docId, fees, address, available } = req.body
-
-        await doctorModel.findByIdAndUpdate(docId, { fees, address, available })
-
-        res.json({ success: true, message: 'Profile Updated' })
-
+        const { docId, fees, address, available } = req.body;
+        await doctorModel.findByIdAndUpdate(docId, { fees, address, available });
+        res.json({ success: true, message: 'Profile Updated' });
     } catch (error) {
-        console.log(error)
-        res.json({ success: false, message: error.message })
+        console.log(error);
+        res.json({ success: false, message: error.message });
     }
-}
+};
 
 const doctorDashboard = async (req, res) => {
     try {
+        const { docId } = req.body;
+        const appointments = await appointmentModel.find({ docId });
 
-        const { docId } = req.body
-
-        const appointments = await appointmentModel.find({ docId })
-
-        let earnings = 0
-
-        appointments.map((item) => {
+        let earnings = 0;
+        appointments.forEach(item => {
             if (item.isCompleted || item.payment) {
-                earnings += item.amount
+                earnings += item.amount;
             }
-        })
+        });
 
-        let patients = []
-
-        appointments.map((item) => {
+        let patients = [];
+        appointments.forEach(item => {
             if (!patients.includes(item.userId)) {
-                patients.push(item.userId)
+                patients.push(item.userId);
             }
-        })
-
-
+        });
 
         const dashData = {
             earnings,
             appointments: appointments.length,
             patients: patients.length,
             latestAppointments: appointments.reverse()
+        };
+
+        res.json({ success: true, dashData });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: error.message });
+    }
+};
+
+const bookAppointmentDoctor = async (req, res) => {
+    try {
+        const { docId, slotDate, timeSlot, userId, amount } = req.body;
+
+        const existing = await appointmentModel.findOne({
+            docId,
+            slotDate,
+            timeSlot,
+            cancelled: { $ne: true }
+        });
+
+        if (existing) {
+            return res.status(400).json({
+                success: false,
+                message: "This time slot is already booked. Please choose a different time."
+            });
         }
 
-        res.json({ success: true, dashData })
+        const newAppointment = new appointmentModel({
+            docId,
+            slotDate,
+            timeSlot,
+            userId,
+            amount
+        });
 
+        await newAppointment.save();
+
+        res.status(200).json({
+            success: true,
+            message: "Appointment booked successfully",
+            appointment: newAppointment
+        });
     } catch (error) {
-        console.log(error)
-        res.json({ success: false, message: error.message })
+        console.log(error);
+        res.status(500).json({ success: false, message: error.message });
     }
-}
+};
 
 export {
     loginDoctor,
@@ -190,5 +198,6 @@ export {
     appointmentComplete,
     doctorDashboard,
     doctorProfile,
-    updateDoctorProfile
-}
+    updateDoctorProfile,
+    bookAppointmentDoctor
+};
